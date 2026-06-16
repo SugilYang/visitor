@@ -375,6 +375,9 @@
       <button class="btn btn-verify" id="btnVerify" onclick="verify()">확인</button>
     </div>
     <div class="verify-result" id="verifyResult"></div>
+    <div id="toStep2Wrap" style="display:none;margin-top:16px;text-align:right;">
+      <button class="btn btn-copy" onclick="goStep(2)" style="min-width:140px;">다음 →</button>
+    </div>
   </div>
 
   </div><!-- /step1 -->
@@ -583,14 +586,14 @@
           escortData = d.escort;
           showVerify(true, '<b>'+d.escort.name+'</b> · '+d.escort.dept+' · '+d.escort.duty+' ('+d.escort.mobile+') 확인되었습니다.');
           updateGenBtn();
-          setTimeout(function(){ if(escortData && cur===1) goStep(2); }, 900);
+          document.getElementById('toStep2Wrap').style.display = 'block';
         } else if(d.ok && d.multiple){
           escortData = null;
           showVerify(false, '동일 정보의 직원이 여러 명입니다. 담당자에게 문의하세요.');
           updateGenBtn();
         } else {
           escortData = null;
-          showVerify(false, d.message || '확인에 실패했습니다.');
+          showVerify(false, '일치하는 담당자가 없습니다. 이름과 휴대폰 뒷 4자리를 다시 확인해 주세요.');
           updateGenBtn();
         }
       })
@@ -611,6 +614,7 @@
     document.getElementById(id).addEventListener('input', function(){
       escortData = null;
       document.getElementById('verifyResult').className = 'verify-result';
+      document.getElementById('toStep2Wrap').style.display = 'none';
       updateGenBtn();
     });
   });
@@ -755,8 +759,8 @@
     if(!escortData){ alert('인솔자 정보가 없습니다. 다시 확인하세요.'); return; }
     var sb=document.getElementById('btnSubmit');
     var sm=document.getElementById('submitMsg');
-    sb.disabled=true; sb.textContent='제출 중…';
-    sm.style.display='block'; sm.style.color='#5b6472'; sm.innerHTML='전자결재를 기안하고 있습니다…';
+    sb.disabled=true; sb.textContent='신청 중…';
+    sm.style.display='block'; sm.style.color='#5b6472'; sm.innerHTML='신청 중입니다…';
 
     var p4=document.getElementById('escortPhone4').value.trim();
     var name=document.getElementById('escortName').value.trim();
@@ -775,9 +779,16 @@
     .then(function(r){ return r.json(); })
     .then(function(d){
       if(d.ok){
-        sb.textContent='✓ 신청 완료';
+        sb.style.display='none';
+        document.querySelector('#overlay .modal-actions .btn-close').style.display='none';
         sm.style.color='#0f6e6e';
-        sm.innerHTML='<b>내방 신청이 접수되었습니다.</b><br>담당자에게 전달되었으며, 담당자 확인 후 처리됩니다.';
+        sm.innerHTML='<div style="text-align:center;padding:8px 0;">'
+          + '<div style="font-size:40px;margin-bottom:8px;">✓</div>'
+          + '<b style="font-size:16px;">내방 신청이 완료되었습니다.</b><br>'
+          + '<span style="color:#5b6472;">담당자 확인 후 처리됩니다.</span>'
+          + '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;">'
+          + '<button class="btn btn-close" onclick="closeModal()" style="min-width:120px;">닫기</button>'
+          + '</div></div>';
       } else {
         sb.disabled=false; sb.textContent='✓ 이대로 신청하기';
         sm.style.color='#c0392b';
