@@ -230,11 +230,6 @@
   #app.show{ animation:appear .6s ease .2s forwards; }
   @keyframes appear{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
 
-  @media (prefers-reduced-motion: reduce){
-    #intro .bg, #intro .center, #intro .bar{ animation:none; }
-    #app{ opacity:1; }
-  }
-
   /* 로고 배지 (인트로) */
   #intro .badge.logo{
     background:#fff;
@@ -504,12 +499,11 @@
   (function(){
     var intro = document.getElementById('intro');
     var app = document.getElementById('app');
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var WAIT = reduce ? 200 : 2800;
+    var WAIT = 2800;
     setTimeout(function(){
       app.classList.add('show');
       intro.classList.add('done');
-      setTimeout(function(){ intro.classList.add('gone'); }, reduce?250:750);
+      setTimeout(function(){ intro.classList.add('gone'); }, 750);
     }, WAIT);
   })();
 
