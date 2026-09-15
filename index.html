@@ -139,6 +139,35 @@
   .modal-top .x{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;}
   .modal-actions{padding:14px 18px;display:flex;gap:10px;border-top:1px solid var(--line2);flex:0 0 auto;background:#fff;}
   .btn-copy{flex:1;background:var(--teal);color:#fff;}
+
+  /* ===== 필독 공지 팝업 ===== */
+  #notice{
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(15,30,30,.55); align-items:center; justify-content:center; padding:20px;
+  }
+  #notice.show{display:flex;}
+  .notice-box{
+    background:#fff; border-radius:var(--radius); max-width:390px; width:100%;
+    overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,.25);
+  }
+  .notice-head{
+    background:var(--warn); color:#fff; font-weight:700; font-size:16px;
+    padding:14px 18px; letter-spacing:.5px;
+  }
+  .notice-body{padding:16px 18px 6px; font-size:12.5px; color:var(--ink); line-height:1.65; word-break:keep-all;}
+  .notice-body ul{margin:0; padding-left:18px;}
+  .notice-body li{margin-bottom:10px;}
+  .notice-red{color:var(--warn); font-weight:700;}
+  .notice-check{
+    display:flex; align-items:center; gap:8px; margin:8px 0 12px;
+    font-weight:600; color:var(--teal-d); cursor:pointer;
+  }
+  .notice-check input{width:16px;height:16px;accent-color:var(--teal);}
+  .notice-btn{
+    display:block; width:calc(100% - 36px); margin:0 18px 18px;
+    background:var(--teal); color:#fff;
+  }
+  .notice-btn:disabled{background:#c3ccd6; cursor:not-allowed;}
   .btn-copy:hover{background:var(--teal-d);}
   .btn-copy.done{background:#1f8a4c;}
   .btn-close{background:#eef0f3;color:var(--ink);}
@@ -500,6 +529,22 @@
   </div>
 </div>
 
+<div id="notice">
+  <div class="notice-box">
+    <div class="notice-head">필독 안내</div>
+    <div class="notice-body">
+      <ul>
+        <li>방문 목적과 소속은 <span class="notice-red">사실대로 기재</span>해 주세요.</li>
+        <li><span class="notice-red">허위 기재 적발 시</span> 이티에스 보안 규정 위반에 따라<br>
+        <span class="notice-red">해당 업체에 공식 통보</span>되며, <span class="notice-red">적발자 및 해당 차량의</span><br>
+        <span class="notice-red">출입이 영구히 제한</span>됩니다.</li>
+      </ul>
+      <label class="notice-check"><input type="checkbox" id="noticeChk" onchange="document.getElementById('noticeBtn').disabled=!this.checked"> 위 내용을 확인했습니다</label>
+    </div>
+    <button class="btn notice-btn" id="noticeBtn" disabled onclick="document.getElementById('notice').classList.remove('show')">확인</button>
+  </div>
+</div>
+
 <script>
   // ===== 인트로 → 입력화면 전환 (매번 표시) =====
   (function(){
@@ -510,6 +555,7 @@
       app.classList.add('show');
       intro.classList.add('done');
       setTimeout(function(){ intro.classList.add('gone'); }, 750);
+      document.getElementById('notice').classList.add('show');
     }, WAIT);
   })();
 
