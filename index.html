@@ -151,10 +151,10 @@
     overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,.25);
   }
   .notice-head{
-    background:var(--warn); color:#fff; font-weight:700; font-size:16px;
+    background:var(--warn); color:#fff; font-weight:700; font-size:19px;
     padding:14px 18px; letter-spacing:.5px;
   }
-  .notice-body{padding:16px 18px 6px; font-size:12.5px; color:var(--ink); line-height:1.65; word-break:keep-all;}
+  .notice-body{padding:16px 18px 6px; font-size:14.5px; color:var(--ink); line-height:1.7; word-break:keep-all;}
   .notice-body ul{margin:0; padding-left:18px;}
   .notice-body li{margin-bottom:10px;}
   .notice-red{color:var(--warn); font-weight:700;}
@@ -162,7 +162,8 @@
     display:flex; align-items:center; gap:8px; margin:8px 0 12px;
     font-weight:600; color:var(--teal-d); cursor:pointer;
   }
-  .notice-check input{width:16px;height:16px;accent-color:var(--teal);}
+  .notice-check{font-size:14.5px;}
+  .notice-check input{width:18px;height:18px;accent-color:var(--teal);}
   .notice-btn{
     display:block; width:calc(100% - 36px); margin:0 18px 18px;
     background:var(--teal); color:#fff;
@@ -535,9 +536,7 @@
     <div class="notice-body">
       <ul>
         <li>방문 목적과 소속은 <span class="notice-red">사실대로 기재</span>해 주세요.</li>
-        <li><span class="notice-red">허위 기재 적발 시</span> 이티에스 보안 규정 위반에 따라<br>
-        <span class="notice-red">해당 업체에 공식 통보</span>되며, <span class="notice-red">적발자 및 해당 차량의</span><br>
-        <span class="notice-red">출입이 영구히 제한</span>됩니다.</li>
+        <li><span class="notice-red">허위 기재 적발 시</span> 이티에스 보안 규정 위반에 따라 <span class="notice-red">해당 업체에 공식 통보</span>되며, <span class="notice-red">적발자 및 해당 차량의 출입이 영구히 제한</span>됩니다.</li>
       </ul>
       <label class="notice-check"><input type="checkbox" id="noticeChk" onchange="document.getElementById('noticeBtn').disabled=!this.checked"> 위 내용을 확인했습니다</label>
     </div>
